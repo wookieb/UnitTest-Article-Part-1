@@ -59,10 +59,12 @@ class ReaderTest extends PHPUnit_Framework_TestCase {
 	public function testReaderExceptionsThrowsDuringParseEntryAreCollectedInErrors() {
 		$this->getMockBuilder('Reader_Tag_ThrowsException')
 				->setMockClassName('Reader_Tag_Entry')
+				->disableOriginalConstructor()
 				->getMock();
 
 		$this->getMockBuilder('Reader_Tag_ThrowsException')
 				->setMockClassName('Reader_Tag_Entry2')
+				->disableOriginalConstructor()
 				->getMock();
 
 		$this->object = new Reader('resources/datasets/Reader/example.xml');
@@ -73,17 +75,19 @@ class ReaderTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * @runInSeparateProcess
-	 * @testReaderCollectsObjectsCorrespondingToEntryTagName
+	 * @depends testReaderCollectsObjectsCorrespondingToEntryTagName
 	 */
 	public function testDataAndErrorsAreCleanOffAfterAnotherUsageTime() {
 		$this->getMockBuilder('Reader_Tag')
 				->setMockClassName('Reader_Tag_Entry')
-				->getMock();
+				->disableOriginalConstructor()
+				->getMockForAbstractClass();
 
 		$this->getMockBuilder('Reader_Tag')
 				->setMockClassName('Reader_Tag_Entry2')
-				->getMock();
-		$this->object = new Reader_Tag('resources/datasets/Reader/example.xml');
+				->disableOriginalConstructor()
+				->getMockForAbstractClass();
+		$this->object = new Reader('resources/datasets/Reader/example.xml');
 		$this->assertSame(2, count($this->object->getData()));
 		$this->object->__construct('resources/datasets/Reader/example_less.xml');
 		$this->assertSame(1, count($this->object->getData()));
