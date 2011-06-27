@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<root>
-	<file name="test">test.php</file>
-	<file name="nieistniejacy">nonexist.php</file>
-	<number name="wartosc">0.1</number>
-</root>
